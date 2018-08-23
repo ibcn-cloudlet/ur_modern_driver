@@ -68,18 +68,18 @@ def move_repeated():
     try:
         joint_states = rospy.wait_for_message("joint_states", JointState)
         joints_pos = joint_states.position
-        d = 2.0
+        d = 8.0
         g.trajectory.points = [JointTrajectoryPoint(positions=joints_pos, velocities=[0]*6, time_from_start=rospy.Duration(0.0))]
         for i in range(10):
             g.trajectory.points.append(
                 JointTrajectoryPoint(positions=Q1, velocities=[0]*6, time_from_start=rospy.Duration(d)))
-            d += 1
+            d += 4
             g.trajectory.points.append(
                 JointTrajectoryPoint(positions=Q2, velocities=[0]*6, time_from_start=rospy.Duration(d)))
-            d += 1
+            d += 4
             g.trajectory.points.append(
                 JointTrajectoryPoint(positions=Q3, velocities=[0]*6, time_from_start=rospy.Duration(d)))
-            d += 2
+            d += 4
         client.send_goal(g)
         client.wait_for_result()
     except KeyboardInterrupt:
